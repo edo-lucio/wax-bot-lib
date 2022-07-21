@@ -23,9 +23,9 @@ class WaxBotHelpers {
                     break;
                 }
 
-                const limit = data.data.data.length - 1; // get the last planet index
-                lb = data.data.data[limit].asset_id; // use the last planed asset id as lower bound
-                planets = planets.concat(data.data.data); // add planets
+                const limit = data.data.data.length - 1; // get the last asset index
+                lb = data.data.data[limit].asset_id; // use the last asset id as lower bound
+                planets = planets.concat(data.data.data); // add assets
             } catch (err) {
                 console.log(err);
                 await Utils.sleep(2000);
