@@ -12,5 +12,7 @@ module.exports = Object.freeze({
 
     ALCOR_CONTRACT: "alcordexmain",
 
+    ATOMIC_ASSETS_BASE: `https://wax.api.atomicassets.io/atomicassets/v1/assets?collection_name=${}&schema_name=dark.planets&page=`,
+
     MARKETS_TABLE: "markets",
 });

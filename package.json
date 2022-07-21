@@ -29,6 +29,7 @@
         "prettier-eslint-cli": "^6.0.1"
     },
     "dependencies": {
+        "axios": "^0.27.2",
         "dotenv": "^16.0.1",
         "eosjs": "^22.1.0",
         "eosjs-ecc": "^4.0.7",
