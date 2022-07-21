@@ -39,8 +39,8 @@ class WaxBotHelpers {
 module.exports = { WaxBotHelpers };
 
 // async function test() {
-//     const data = await Helpers.fetchAsset("darkgalaxies", "dark.planets");
-//     console.log(data[data.length - 1]);
+//     const data = await WaxBotHelpers.fetchAsset("darkgalaxies", "dark.planets");
+//     console.log(data);
 // }
 
 // test();
