@@ -7,11 +7,11 @@ class RpcWrapper {
         this.rpc = wallet.rpc;
     }
 
-    async fetchTable(account, id, type, indexPosition, lb, ub, key) {
+    async fetchTable(account, scope, table, indexPosition, lb, ub, key) {
         const tableOptions = {
             code: account,
-            scope: id,
-            table: type,
+            scope: scope,
+            table: table,
             index_position: indexPosition || 1,
             limit: 1000,
             lower_bound: lb || null,
