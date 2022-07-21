@@ -5,4 +5,6 @@ const { sendTx } = require("./libs/classes/transactions/send_tx");
 
 const { RpcWrapper } = require("./libs/classes/get");
 
-module.exports = { Wallet, sendTx, RpcWrapper };
+const { WaxBotHelpers } = require("./libs/methods/Helpers");
+
+module.exports = { Wallet, sendTx, RpcWrapper, WaxBotHelpers };
