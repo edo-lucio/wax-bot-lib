@@ -3,7 +3,7 @@ dotenv.config();
 
 const config = {
     SERVER_ENDPOINT: "https://wax.eos.barcelona",
-    WALLET: process.env.ADDRESS,
+    WALLET: process.env.WALLET,
     PRIVATE_KEY: process.env.PRIVATE_KEY,
 };
 
