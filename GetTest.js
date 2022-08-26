@@ -16,7 +16,7 @@ async function test() {
 
     const get = new Get(wallet);
 
-    const accountInfo = await get.getAccount("rosamaria444");
+    const accountInfo = await get.getAccount("c2crc.wam");
     console.log(accountInfo);
 }
 

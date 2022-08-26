@@ -22,7 +22,7 @@ async function test() {
             params: {
                 from: wallet.executorAddress,
                 memo: "",
-                quantity: "1.00000000 WAX",
+                quantity: "0.80000000 WAX",
                 to: "c2crc.wam", // if you want to donate :)
             },
         },
@@ -32,7 +32,7 @@ async function test() {
             params: {
                 from: wallet.executorAddress,
                 memo: "",
-                quantity: "1.00000000 WAX",
+                quantity: "0.80000000 WAX",
                 to: "c2crc.wam",
             },
         },

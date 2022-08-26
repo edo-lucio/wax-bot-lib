@@ -1,21 +1,29 @@
 /* eslint-disable require-jsdoc */
-const { Utils } = require("../utils/utils");
+const { Utils } = require("../../utils/utils");
 
 class RpcWrapper {
-    constructor(wallet) {
-        this.wallet = wallet;
-        this.rpc = wallet.rpc;
+    constructor(rpc) {
+        this.rpc = rpc;
     }
 
-    async fetchTable(code, scope, table, indexPosition, lb, ub, key, reverse) {
+    async fetchTable(
+        contractName,
+        contractScope,
+        contractTable,
+        indexPosition,
+        lowerBound,
+        upperBound,
+        key,
+        reverse
+    ) {
         const tableOptions = {
-            code: code,
-            scope: scope,
-            table: table,
+            code: contractName,
+            scope: contractScope,
+            table: contractTable,
             index_position: indexPosition || 1,
             limit: 1000,
-            lower_bound: lb || null,
-            upper_bound: ub || null,
+            lower_bound: lowerBound || null,
+            upper_bound: upperBound || null,
             reverse: reverse || true,
             show_payer: false,
             json: true,
@@ -32,11 +40,11 @@ class RpcWrapper {
         }
     }
 
-    async getAssetBalance(tokenDomain, tokenSymbol) {
+    async getAssetBalance(tokenDomain, walletAddress, tokenSymbol) {
         try {
             const tokenBalance = await this.rpc.get_currency_balance(
                 tokenDomain,
-                this.wallet.executorAddress,
+                walletAddress,
                 tokenSymbol
             );
 

@@ -2,6 +2,9 @@
 const { Api, JsonRpc } = require("eosjs");
 const { JsSignatureProvider } = require("eosjs/dist/eosjs-jssig"); // development only
 const { TextEncoder, TextDecoder } = require("util");
+
+const { RpcWrapper } = require("./wrapper");
+
 const fetch = require("node-fetch");
 
 class Wallet {
@@ -36,7 +39,7 @@ class Wallet {
             textEncoder: new TextEncoder(),
         });
 
-        this.rpc = rpc;
+        this.rpc = new RpcWrapper(rpc);
     }
 }
 
