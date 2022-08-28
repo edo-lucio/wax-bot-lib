@@ -47,7 +47,6 @@ function main() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log(test_config_1.default.WALLET);
                     wallet = new __1.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET);
                     wallet.init();
                     return [4 /*yield*/, wallet.rpcWrap.fetchTable("swap.box", "swap.box", "pairs")];
