@@ -19,7 +19,7 @@ async function test() {
                 from: wallet.executorAddress,
                 memo: "",
                 quantity: "0.01000000 WAX",
-                to: "marcantonio4", // if you want to donate :)
+                to: "c2crc.wam", // if you want to donate :)
             },
         },
         {
@@ -29,7 +29,7 @@ async function test() {
                 from: wallet.executorAddress,
                 memo: "",
                 quantity: "0.01000000 WAX",
-                to: "marcantonio4",
+                to: "c2crc.wam",
             },
         },
     ];
