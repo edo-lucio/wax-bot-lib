@@ -1,21 +1,24 @@
 /* eslint-disable require-jsdoc */
-const { Utils } = require("../../utils/utils");
+import { Utils } from "../../utils/utils";
+import { JsonRpc } from "eosjs";
 
 class RpcWrapper {
-    constructor(rpc) {
+    rpc: JsonRpc;
+
+    constructor(rpc: JsonRpc) {
         this.rpc = rpc;
     }
 
     async fetchTable(
-        contractName,
-        contractScope,
-        contractTable,
-        indexPosition,
-        lowerBound,
-        upperBound,
-        key,
-        reverse
-    ) {
+        contractName?: string,
+        contractScope?: string,
+        contractTable?: string,
+        indexPosition?: string,
+        lowerBound?: number,
+        upperBound?: number,
+        key?: string,
+        reverse?: boolean
+    ): Promise<any> {
         const tableOptions = {
             code: contractName,
             scope: contractScope,
@@ -36,11 +39,24 @@ class RpcWrapper {
         } catch (error) {
             console.log("\nCaught exception: " + error);
             await Utils.sleep(8000);
-            return this.fetchTable(account, type, id, lb, ub);
+            return this.fetchTable(
+                contractName,
+                contractScope,
+                contractTable,
+                indexPosition,
+                lowerBound,
+                upperBound,
+                key,
+                reverse
+            );
         }
     }
 
-    async getAssetBalance(tokenDomain, walletAddress, tokenSymbol) {
+    async getAssetBalance(
+        tokenDomain: string,
+        walletAddress: string,
+        tokenSymbol: string
+    ): Promise<any> {
         try {
             const tokenBalance = await this.rpc.get_currency_balance(
                 tokenDomain,
@@ -55,11 +71,15 @@ class RpcWrapper {
         } catch (error) {
             console.log("\nCaught exception: " + error);
             await Utils.sleep(8000);
-            return this.getAssetBalance(tokenDomain, tokenSymbol);
+            return this.getAssetBalance(
+                tokenDomain,
+                walletAddress,
+                tokenSymbol
+            );
         }
     }
 
-    async getAccount(walletAddress) {
+    async getAccount(walletAddress: string): Promise<any> {
         try {
             const accountData = await this.rpc.get_account(walletAddress);
             return accountData;
@@ -70,4 +90,4 @@ class RpcWrapper {
     }
 }
 
-module.exports = { RpcWrapper };
+export { RpcWrapper };

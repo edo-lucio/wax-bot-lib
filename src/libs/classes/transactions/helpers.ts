@@ -1,17 +1,19 @@
 /* eslint-disable require-jsdoc */
 
+import { Wallet } from "../wallet/Wallet";
+
 /* set data of the transaction to be send*/
-function setTxData(wallet, contracts) {
+function setTxData(wallet: Wallet, contracts: any[]): Object {
     const authorization = [
         { actor: wallet.executorAddress, permission: "active" }, // set first signer
     ];
 
-    const txData = { actions: [] };
+    const txData: any = { actions: [] };
 
     for (let i = 0; i < contracts.length; i++) {
         txData.actions.push({
-            account: contracts[i].name,
-            name: contracts[i].action,
+            account: contracts[i].contract_name,
+            name: contracts[i].contract_action,
             authorization: authorization,
             data: contracts[i].params,
         });
@@ -20,7 +22,7 @@ function setTxData(wallet, contracts) {
 }
 
 /* check if wallet needs a fuel tx   */
-async function needForFuelTx(wallet) {
+async function needForFuelTx(wallet: Wallet): Promise<boolean> {
     try {
         const accountData = await wallet.rpc.get_account(
             wallet.executorAddress
@@ -39,7 +41,7 @@ async function needForFuelTx(wallet) {
     }
 }
 
-function setCosign(wallet, txData) {
+function setCosign(wallet: Wallet, txData: any): object {
     for (let i = 0; i < txData.actions.length; i++) {
         if (txData.actions[i].authorization.length >= 2) continue; // do not add a cosigner if there's already one
 
@@ -54,7 +56,7 @@ function setCosign(wallet, txData) {
     return txData;
 }
 
-module.exports = { setTxData, needForFuelTx, setCosign };
+export { setTxData, needForFuelTx, setCosign };
 
 // function setExecutor(actions, address) {
 //     /* every wax tx needs an executor inside the data parameter */

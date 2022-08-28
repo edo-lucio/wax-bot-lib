@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+export const consts = Object.freeze({
     TAPOS_FIELD: {
         blocksBehind: 3,
         expireSeconds: 30,
