@@ -9,6 +9,10 @@ class RpcWrapper {
         this.rpc = rpc;
     }
 
+    /*
+     - get a wallet balance
+       - incorporated error handling 
+       */
     async getAssetBalance(
         tokenDomain: string,
         walletAddress: string,
@@ -36,6 +40,10 @@ class RpcWrapper {
         }
     }
 
+    /* 
+    - get wallet informations 
+       - incorporated error handling 
+       */
     async getAccount(walletAddress: string): Promise<any> {
         try {
             const accountData = await this.rpc.get_account(walletAddress);
@@ -46,6 +54,10 @@ class RpcWrapper {
         }
     }
 
+    /* 
+    - get data from a contract's table 
+       - incorporated error handling 
+       */
     async fetchTable({
         code,
         scope,
@@ -76,7 +88,6 @@ class RpcWrapper {
             return res;
         } catch (error) {
             console.log("\nCaught exception: " + error);
-            await Utils.sleep(8000);
             return this.fetchTable({
                 code,
                 scope,
