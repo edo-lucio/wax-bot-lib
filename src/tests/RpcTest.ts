@@ -1,12 +1,15 @@
-import { Wallet } from "..";
+import { RpcWrapper } from "..";
+import { JsonRpc } from "eosjs";
+
+import fetch from "node-fetch";
+
 import config from "./test_config";
 
 async function main() {
-    const wallet = new Wallet(config.SERVER_ENDPOINT, config.WALLET);
+    const rpc = new JsonRpc(config.SERVER_ENDPOINT, { fetch });
+    const rpcWrapper = new RpcWrapper(rpc);
 
-    wallet.init();
-
-    const data = await wallet.rpcWrap.fetchTable({
+    const data = await rpcWrapper.fetchTable({
         code: "swap.box",
         scope: "swap.box",
         table: "pairs",
