@@ -49,7 +49,11 @@ function main() {
                 case 0:
                     wallet = new __1.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET);
                     wallet.init();
-                    return [4 /*yield*/, wallet.rpcWrap.fetchTable("swap.box", "swap.box", "pairs")];
+                    return [4 /*yield*/, wallet.rpcWrap.fetchTable({
+                            code: "swap.box",
+                            scope: "swap.box",
+                            table: "pairs",
+                        })];
                 case 1:
                     data = _a.sent();
                     console.log(data);

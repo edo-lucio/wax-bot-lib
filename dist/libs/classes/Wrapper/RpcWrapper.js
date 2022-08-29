@@ -43,47 +43,13 @@ var RpcWrapper = /** @class */ (function () {
     function RpcWrapper(rpc) {
         this.rpc = rpc;
     }
-    RpcWrapper.prototype.fetchTable = function (contractName, contractScope, contractTable, indexPosition, lowerBound, upperBound, key, reverse) {
-        return __awaiter(this, void 0, void 0, function () {
-            var tableOptions, res, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        tableOptions = {
-                            code: contractName,
-                            scope: contractScope,
-                            table: contractTable,
-                            index_position: indexPosition || 1,
-                            limit: 1000,
-                            lower_bound: lowerBound || null,
-                            upper_bound: upperBound || null,
-                            reverse: reverse || true,
-                            show_payer: false,
-                            json: true,
-                            key_type: key,
-                        };
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 5]);
-                        return [4 /*yield*/, this.rpc.get_table_rows(tableOptions)];
-                    case 2:
-                        res = _a.sent();
-                        return [2 /*return*/, res];
-                    case 3:
-                        error_1 = _a.sent();
-                        console.log("\nCaught exception: " + error_1);
-                        return [4 /*yield*/, utils_1.Utils.sleep(8000)];
-                    case 4:
-                        _a.sent();
-                        return [2 /*return*/, this.fetchTable(contractName, contractScope, contractTable, indexPosition, lowerBound, upperBound, key, reverse)];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        });
-    };
+    /*
+     - get a wallet balance
+       - incorporated error handling
+       */
     RpcWrapper.prototype.getAssetBalance = function (tokenDomain, walletAddress, tokenSymbol) {
         return __awaiter(this, void 0, void 0, function () {
-            var tokenBalance, error_2;
+            var tokenBalance, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -96,8 +62,8 @@ var RpcWrapper = /** @class */ (function () {
                         }
                         return [2 /*return*/, 0.0];
                     case 2:
-                        error_2 = _a.sent();
-                        console.log("\nCaught exception: " + error_2);
+                        error_1 = _a.sent();
+                        console.log("\nCaught exception: " + error_1);
                         return [4 /*yield*/, utils_1.Utils.sleep(8000)];
                     case 3:
                         _a.sent();
@@ -107,9 +73,13 @@ var RpcWrapper = /** @class */ (function () {
             });
         });
     };
+    /*
+    - get wallet informations
+       - incorporated error handling
+       */
     RpcWrapper.prototype.getAccount = function (walletAddress) {
         return __awaiter(this, void 0, void 0, function () {
-            var accountData, error_3;
+            var accountData, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -119,11 +89,61 @@ var RpcWrapper = /** @class */ (function () {
                         accountData = _a.sent();
                         return [2 /*return*/, accountData];
                     case 2:
-                        error_3 = _a.sent();
+                        error_2 = _a.sent();
                         return [4 /*yield*/, utils_1.Utils.sleep(4000)];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, this.getAccount(walletAddress)];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /*
+    - get data from a contract's table
+       - incorporated error handling
+       */
+    RpcWrapper.prototype.fetchTable = function (_a) {
+        var code = _a.code, scope = _a.scope, table = _a.table, limit = _a.limit, lower_bound = _a.lower_bound, upper_bound = _a.upper_bound, index_position = _a.index_position, key_type = _a.key_type, reverse = _a.reverse;
+        return __awaiter(this, void 0, void 0, function () {
+            var tableOptions, res, error_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        tableOptions = {
+                            code: code,
+                            scope: scope,
+                            table: table,
+                            index_position: index_position || 1,
+                            limit: limit || 1000,
+                            lower_bound: lower_bound || null,
+                            upper_bound: upper_bound || null,
+                            reverse: reverse || true,
+                            show_payer: false,
+                            json: true,
+                            key_type: key_type,
+                        };
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.rpc.get_table_rows(tableOptions)];
+                    case 2:
+                        res = _b.sent();
+                        return [2 /*return*/, res];
+                    case 3:
+                        error_3 = _b.sent();
+                        console.log("\nCaught exception: " + error_3);
+                        return [2 /*return*/, this.fetchTable({
+                                code: code,
+                                scope: scope,
+                                table: table,
+                                limit: limit,
+                                lower_bound: lower_bound,
+                                upper_bound: upper_bound,
+                                index_position: index_position,
+                                key_type: key_type,
+                                reverse: reverse,
+                            })];
                     case 4: return [2 /*return*/];
                 }
             });
