@@ -11,6 +11,7 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "moduleResolution": "node",
-        "strictPropertyInitialization": false
+        "strictPropertyInitialization": false,
+        "declaration": true
     }
 }
