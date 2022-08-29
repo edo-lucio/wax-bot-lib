@@ -9,28 +9,29 @@ class RpcWrapper {
         this.rpc = rpc;
     }
 
-    async fetchTable(
-        contractName?: string,
-        contractScope?: string,
-        contractTable?: string,
-        indexPosition?: string,
-        lowerBound?: number,
-        upperBound?: number,
-        key?: string,
-        reverse?: boolean
-    ): Promise<any> {
+    async fetchTable({
+        code,
+        scope,
+        table,
+        limit,
+        lower_bound,
+        upper_bound,
+        index_position,
+        key_type,
+        reverse,
+    }: any): Promise<any> {
         const tableOptions = {
-            code: contractName,
-            scope: contractScope,
-            table: contractTable,
-            index_position: indexPosition || 1,
-            limit: 1000,
-            lower_bound: lowerBound || null,
-            upper_bound: upperBound || null,
+            code: code,
+            scope: scope,
+            table: table,
+            index_position: index_position || 1,
+            limit: limit || 1000,
+            lower_bound: lower_bound || null,
+            upper_bound: upper_bound || null,
             reverse: reverse || true,
             show_payer: false,
             json: true,
-            key_type: key,
+            key_type: key_type,
         };
 
         try {
@@ -39,16 +40,17 @@ class RpcWrapper {
         } catch (error) {
             console.log("\nCaught exception: " + error);
             await Utils.sleep(8000);
-            return this.fetchTable(
-                contractName,
-                contractScope,
-                contractTable,
-                indexPosition,
-                lowerBound,
-                upperBound,
-                key,
-                reverse
-            );
+            return this.fetchTable({
+                code,
+                scope,
+                table,
+                limit,
+                lower_bound,
+                upper_bound,
+                index_position,
+                key_type,
+                reverse,
+            });
         }
     }
 

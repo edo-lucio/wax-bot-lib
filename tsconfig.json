@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "ES6",
+        "module": "CommonJS",
         "lib": ["es6"],
         "allowJs": true,
         "outDir": "./dist",
@@ -10,6 +10,7 @@
         "noImplicitAny": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
+        "moduleResolution": "node",
         "strictPropertyInitialization": false
     }
 }
