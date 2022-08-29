@@ -366,8 +366,8 @@ var FuelTransaction = /** @class */ (function () {
                         .authorization[0].permission ||
                 modifiedTransaction.actions[i].data.toLowerCase() !==
                     deserializedTransaction.actions[i - expectedNewActions].data.toLowerCase()) {
-                var _b = deserializedTransaction.actions[i - expectedNewActions], account = _b.account, name_1 = _b.name;
-                throw new Error("Transaction returned by API has non-matching action at index ".concat(i, " (").concat(account, ":").concat(name_1, ")"));
+                var _b = deserializedTransaction.actions[i - expectedNewActions], account = _b.account, name = _b.name;
+                throw new Error("Transaction returned by API has non-matching action at index ".concat(i, " (").concat(account, ":").concat(name, ")"));
             }
         }
     };

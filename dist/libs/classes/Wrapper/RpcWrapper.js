@@ -108,49 +108,24 @@ var RpcWrapper = /** @class */ (function () {
     - get data from a contract's table
        - incorporated error handling
        */
-    RpcWrapper.prototype.fetchTable = function (_a) {
-        var code = _a.code, scope = _a.scope, table = _a.table, index_position = _a.index_position, limit = _a.limit, lower_bound = _a.lower_bound, upper_bound = _a.upper_bound, reverse = _a.reverse, show_payer = _a.show_payer, json = _a.json, key_type = _a.key_type;
+    RpcWrapper.prototype.fetchTable = function (a) {
         return __awaiter(this, void 0, void 0, function () {
             var tableOptions, res, error_3;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        tableOptions = {
-                            code: code,
-                            scope: scope,
-                            table: table,
-                            index_position: index_position || 1,
-                            limit: limit || 1000,
-                            lower_bound: lower_bound || null,
-                            upper_bound: upper_bound || null,
-                            reverse: reverse || true,
-                            show_payer: show_payer || false,
-                            json: json || true,
-                            key_type: key_type || undefined,
-                        };
-                        _b.label = 1;
+                        tableOptions = a;
+                        _a.label = 1;
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
+                        _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this.rpc.get_table_rows(tableOptions)];
                     case 2:
-                        res = _b.sent();
+                        res = _a.sent();
                         return [2 /*return*/, res];
                     case 3:
-                        error_3 = _b.sent();
+                        error_3 = _a.sent();
                         console.log("\nCaught exception: " + error_3);
-                        return [2 /*return*/, this.fetchTable({
-                                code: code,
-                                scope: scope,
-                                table: table,
-                                index_position: index_position,
-                                limit: limit,
-                                lower_bound: lower_bound,
-                                upper_bound: upper_bound,
-                                reverse: reverse,
-                                show_payer: show_payer,
-                                json: json,
-                                key_type: key_type,
-                            })];
+                        return [2 /*return*/, this.fetchTable(a)];
                     case 4: return [2 /*return*/];
                 }
             });
