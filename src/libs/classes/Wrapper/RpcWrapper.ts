@@ -58,7 +58,7 @@ class RpcWrapper {
     - get data from a contract's table 
        - incorporated error handling 
        */
-    async fetchTable({
+    async fetchContractTable({
         code,
         scope,
         table,
@@ -88,7 +88,7 @@ class RpcWrapper {
             return res;
         } catch (error) {
             console.log("\nCaught exception: " + error);
-            return this.fetchTable({
+            return this.fetchContractTable({
                 code,
                 scope,
                 table,

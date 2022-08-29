@@ -6,7 +6,7 @@ async function main() {
 
     wallet.init();
 
-    const data = await wallet.rpcWrap.fetchTable({
+    const data = await wallet.rpcWrap.fetchContractTable({
         code: "swap.box",
         scope: "swap.box",
         table: "pairs",
