@@ -57,7 +57,7 @@ class Wallet {
         });
 
         this.rpc = rpc;
-        this.rpcWrap = new RpcWrapper(rpc);
+        this.rpcWrap = new RpcWrapper(this.serverEndpoint);
     }
 }
 

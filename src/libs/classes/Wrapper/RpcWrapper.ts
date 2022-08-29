@@ -2,11 +2,13 @@
 import { Utils } from "../../utils/utils";
 import { JsonRpc } from "eosjs";
 
+import fetch from "node-fetch";
+
 class RpcWrapper {
     rpc: JsonRpc;
 
-    constructor(rpc: JsonRpc) {
-        this.rpc = rpc;
+    constructor(serverEndpoint: string) {
+        this.rpc = new JsonRpc(serverEndpoint, { fetch });
     }
 
     /*
@@ -70,7 +72,19 @@ class RpcWrapper {
         show_payer,
         json,
         key_type,
-    }: any): Promise<any> {
+    }: {
+        code: string;
+        scope: string;
+        table: string;
+        index_position?: any;
+        limit?: number;
+        lower_bound?: number;
+        upper_bound?: number;
+        reverse?: boolean;
+        show_payer?: boolean;
+        json?: boolean;
+        key_type?: string;
+    }): Promise<unknown> {
         const tableOptions = {
             code: code,
             scope: scope,

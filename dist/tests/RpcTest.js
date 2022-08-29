@@ -43,13 +43,12 @@ var __1 = require("..");
 var test_config_1 = __importDefault(require("./test_config"));
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var wallet, data;
+        var rpcWrapper, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    wallet = new __1.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET);
-                    wallet.init();
-                    return [4 /*yield*/, wallet.rpcWrap.fetchTable({
+                    rpcWrapper = new __1.RpcWrapper(test_config_1.default.SERVER_ENDPOINT);
+                    return [4 /*yield*/, rpcWrapper.fetchTable({
                             code: "swap.box",
                             scope: "swap.box",
                             table: "pairs",
