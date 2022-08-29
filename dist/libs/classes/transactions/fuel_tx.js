@@ -1,3 +1,4 @@
+"use strict";
 /* eslint-disable require-jsdoc */
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -55,9 +56,14 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import { RpcError } from "eosjs";
-import ecc from "eosjs-ecc";
-import { consts } from "../../../consts";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FuelTransaction = void 0;
+var eosjs_1 = require("eosjs");
+var eosjs_ecc_1 = __importDefault(require("eosjs-ecc"));
+var consts_1 = require("../../../consts");
 var FuelTransaction = /** @class */ (function () {
     function FuelTransaction(wallet) {
         this.wallet = wallet;
@@ -85,7 +91,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 2:
                         transaction = _d.sent();
                         deserializedTransaction = this.wallet.api.deserializeTransaction(transaction.serializedTransaction);
-                        return [4 /*yield*/, this.wallet.rpc.fetchBuiltin(consts.RESOURCE_PROVIDER_ENDPOINT, {
+                        return [4 /*yield*/, this.wallet.rpc.fetchBuiltin(consts_1.consts.RESOURCE_PROVIDER_ENDPOINT, {
                                 body: JSON.stringify({
                                     signer: signer,
                                     transaction: deserializedTransaction,
@@ -167,7 +173,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 16: return [3 /*break*/, 18];
                     case 17:
                         error_2 = _d.sent();
-                        if (error_2 instanceof RpcError) {
+                        if (error_2 instanceof eosjs_1.RpcError) {
                             console.log("Fuel error", error_2.details[0].message);
                             return [2 /*return*/, [undefined, String(error_2.details[0].message)]];
                         }
@@ -184,7 +190,7 @@ var FuelTransaction = /** @class */ (function () {
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
-                        publicKey = ecc.privateToPublic(this.wallet.executorPrivateKey);
+                        publicKey = eosjs_ecc_1.default.privateToPublic(this.wallet.executorPrivateKey);
                         return [4 /*yield*/, this.wallet.api.getTransactionAbis(modifiedTransaction)];
                     case 1:
                         abis = _e.sent();
@@ -196,7 +202,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 2:
                         serializedTransaction = _b.apply(_a, [__assign.apply(void 0, _c.concat([(_d.context_free_actions = _e.sent(), _d.actions = modifiedTransaction.actions, _d)]))]);
                         return [4 /*yield*/, this.wallet.api.signatureProvider.sign({
-                                chainId: consts.CHAIN_ID,
+                                chainId: consts_1.consts.CHAIN_ID,
                                 requiredKeys: [publicKey],
                                 serializedTransaction: serializedTransaction,
                                 serializedContextFreeData: serializedContextFreeData,
@@ -386,4 +392,4 @@ var FuelTransaction = /** @class */ (function () {
     };
     return FuelTransaction;
 }());
-export { FuelTransaction };
+exports.FuelTransaction = FuelTransaction;

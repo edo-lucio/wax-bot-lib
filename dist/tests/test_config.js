@@ -1,3 +1,4 @@
+"use strict";
 var dotenv = require("dotenv");
 dotenv.config();
 var config = {
@@ -11,4 +12,4 @@ var config = {
         private_key: process.env.PAYER_PRIVATE_KEY || "default",
     },
 };
-export {};
+module.exports = config;

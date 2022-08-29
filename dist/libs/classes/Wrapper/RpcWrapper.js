@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,8 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RpcWrapper = void 0;
 /* eslint-disable require-jsdoc */
-import { Utils } from "../../utils/utils";
+var utils_1 = require("../../utils/utils");
 var RpcWrapper = /** @class */ (function () {
     function RpcWrapper(rpc) {
         this.rpc = rpc;
@@ -61,7 +64,7 @@ var RpcWrapper = /** @class */ (function () {
                     case 2:
                         error_1 = _a.sent();
                         console.log("\nCaught exception: " + error_1);
-                        return [4 /*yield*/, Utils.sleep(8000)];
+                        return [4 /*yield*/, utils_1.Utils.sleep(8000)];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, this.getAssetBalance(tokenDomain, walletAddress, tokenSymbol)];
@@ -87,7 +90,7 @@ var RpcWrapper = /** @class */ (function () {
                         return [2 /*return*/, accountData];
                     case 2:
                         error_2 = _a.sent();
-                        return [4 /*yield*/, Utils.sleep(4000)];
+                        return [4 /*yield*/, utils_1.Utils.sleep(4000)];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, this.getAccount(walletAddress)];
@@ -148,4 +151,4 @@ var RpcWrapper = /** @class */ (function () {
     };
     return RpcWrapper;
 }());
-export { RpcWrapper };
+exports.RpcWrapper = RpcWrapper;

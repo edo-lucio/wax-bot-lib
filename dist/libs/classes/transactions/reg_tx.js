@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,10 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RegularTransaction = void 0;
 /* eslint-disable require-jsdoc */
-import { RpcError } from "eosjs";
-import { setCosign } from "./helpers";
-import { consts } from "../../../consts";
+var eosjs_1 = require("eosjs");
+var helpers_1 = require("./helpers");
+var consts_1 = require("../../../consts");
 var RegularTransaction = /** @class */ (function () {
     function RegularTransaction(wallet) {
         this.wallet = wallet;
@@ -49,23 +52,23 @@ var RegularTransaction = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.wallet.api.transact(txData, consts.TAPOS_FIELD)];
+                        return [4 /*yield*/, this.wallet.api.transact(txData, consts_1.consts.TAPOS_FIELD)];
                     case 1:
                         res = _a.sent();
                         console.log(res);
                         return [2 /*return*/, [res, null]];
                     case 2:
                         err_1 = _a.sent();
-                        if (err_1 instanceof RpcError) {
+                        if (err_1 instanceof eosjs_1.RpcError) {
                             console.log(this.wallet.executorAddress, err_1.details[0].message);
                             // add cosigner if it's a CPU error
                             if (String(err_1.details[0].message).includes("CPU")) {
-                                cosignedTxData = setCosign(this.wallet, txData);
+                                cosignedTxData = (0, helpers_1.setCosign)(this.wallet, txData);
                                 return [2 /*return*/, this.send(cosignedTxData)];
                             }
                             // add cosigner if it's a NET error
                             if (String(err_1.details[0].message).includes("net usage")) {
-                                cosignedTxData = setCosign(this.wallet, txData);
+                                cosignedTxData = (0, helpers_1.setCosign)(this.wallet, txData);
                                 return [2 /*return*/, this.send(cosignedTxData)];
                             }
                             // retry transaction if it's a Fetch error
@@ -91,4 +94,4 @@ var RegularTransaction = /** @class */ (function () {
     };
     return RegularTransaction;
 }());
-export { RegularTransaction };
+exports.RegularTransaction = RegularTransaction;
