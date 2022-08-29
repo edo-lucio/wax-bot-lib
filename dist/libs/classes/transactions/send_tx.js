@@ -1,4 +1,3 @@
-"use strict";
 /* eslint-disable no-unused-vars */
 /* eslint-disable require-jsdoc */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -37,12 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Sender = void 0;
-var helpers_1 = require("./helpers");
-var helpers_2 = require("./helpers");
-var reg_tx_1 = require("./reg_tx");
-var fuel_tx_1 = require("./fuel_tx");
+import { setTxData } from "./helpers";
+import { needForFuelTx } from "./helpers";
+import { RegularTransaction } from "./reg_tx";
+import { FuelTransaction } from "./fuel_tx";
 /* - Send transaction
    - Accepts a wallet and a tx data
    - There are two main scenarios: one where the wallet needs a fuel tx, and one where it doesn't
@@ -52,8 +49,8 @@ var fuel_tx_1 = require("./fuel_tx");
 var Sender = /** @class */ (function () {
     function Sender(wallet) {
         this.wallet = wallet;
-        this.reg = new reg_tx_1.RegularTransaction(wallet);
-        this.fuel = new fuel_tx_1.FuelTransaction(wallet);
+        this.reg = new RegularTransaction(wallet);
+        this.fuel = new FuelTransaction(wallet);
     }
     Sender.prototype.sendTx = function (txData) {
         return __awaiter(this, void 0, void 0, function () {
@@ -61,8 +58,8 @@ var Sender = /** @class */ (function () {
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        fullTxData = (0, helpers_1.setTxData)(this.wallet, txData);
-                        return [4 /*yield*/, (0, helpers_2.needForFuelTx)(this.wallet)];
+                        fullTxData = setTxData(this.wallet, txData);
+                        return [4 /*yield*/, needForFuelTx(this.wallet)];
                     case 1:
                         needIt = _d.sent();
                         if (!needIt) return [3 /*break*/, 4];
@@ -89,4 +86,4 @@ var Sender = /** @class */ (function () {
     };
     return Sender;
 }());
-exports.Sender = Sender;
+export { Sender };

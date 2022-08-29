@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.consts = void 0;
-exports.consts = Object.freeze({
+export var consts = Object.freeze({
     TAPOS_FIELD: {
         blocksBehind: 3,
         expireSeconds: 30,

@@ -1,4 +1,3 @@
-"use strict";
 /* eslint-disable require-jsdoc */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -36,8 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.setCosign = exports.needForFuelTx = exports.setTxData = void 0;
 /* set data of the transaction to be send*/
 function setTxData(wallet, contracts) {
     var authorization = [
@@ -54,7 +51,6 @@ function setTxData(wallet, contracts) {
     }
     return txData;
 }
-exports.setTxData = setTxData;
 /* check if wallet needs a fuel tx   */
 function needForFuelTx(wallet) {
     return __awaiter(this, void 0, void 0, function () {
@@ -81,7 +77,6 @@ function needForFuelTx(wallet) {
         });
     });
 }
-exports.needForFuelTx = needForFuelTx;
 function setCosign(wallet, txData) {
     for (var i = 0; i < txData.actions.length; i++) {
         if (txData.actions[i].authorization.length >= 2)
@@ -96,7 +91,7 @@ function setCosign(wallet, txData) {
     }
     return txData;
 }
-exports.setCosign = setCosign;
+export { setTxData, needForFuelTx, setCosign };
 // function setExecutor(actions, address) {
 //     /* every wax tx needs an executor inside the data parameter */
 //     actions.forEach((action) => {

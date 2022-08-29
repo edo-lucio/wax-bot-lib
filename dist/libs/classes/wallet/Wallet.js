@@ -1,14 +1,8 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Wallet = void 0;
 /* eslint-disable require-jsdoc */
-var eosjs_1 = require("eosjs");
-var eosjs_jssig_1 = require("eosjs/dist/eosjs-jssig"); // development only
-var RpcWrapper_1 = require("../Wrapper/RpcWrapper");
-var node_fetch_1 = __importDefault(require("node-fetch"));
+import { Api, JsonRpc } from "eosjs";
+import { JsSignatureProvider } from "eosjs/dist/eosjs-jssig"; // development only
+import { RpcWrapper } from "../Wrapper/RpcWrapper";
+import fetch from "node-fetch";
 var Wallet = /** @class */ (function () {
     function Wallet(serverEndpoint, executorWallet, coSignWallet) {
         // main
@@ -26,15 +20,15 @@ var Wallet = /** @class */ (function () {
         typeof this.coSignPrivateKey != "undefined"
             ? signers.push(this.coSignPrivateKey)
             : null;
-        var rpc = new eosjs_1.JsonRpc(this.serverEndpoint, { fetch: node_fetch_1.default });
-        var signatureProvider = new eosjs_jssig_1.JsSignatureProvider(signers);
-        this.api = new eosjs_1.Api({
+        var rpc = new JsonRpc(this.serverEndpoint, { fetch: fetch });
+        var signatureProvider = new JsSignatureProvider(signers);
+        this.api = new Api({
             rpc: rpc,
             signatureProvider: signatureProvider,
         });
         this.rpc = rpc;
-        this.rpcWrap = new RpcWrapper_1.RpcWrapper(rpc);
+        this.rpcWrap = new RpcWrapper(rpc);
     };
     return Wallet;
 }());
-exports.Wallet = Wallet;
+export { Wallet };
