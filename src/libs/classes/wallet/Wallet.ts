@@ -5,8 +5,6 @@ import { JsSignatureProvider } from "eosjs/dist/eosjs-jssig"; // development onl
 import { RpcWrapper } from "../Wrapper/RpcWrapper";
 import { WalletCredentials } from "../../interfaces/interfaces";
 
-import { Sender } from "../transactions/send_tx";
-
 import fetch from "node-fetch";
 
 class Wallet {
@@ -57,7 +55,7 @@ class Wallet {
         });
 
         this.rpc = rpc;
-        this.rpcWrap = new RpcWrapper(rpc);
+        this.rpcWrap = new RpcWrapper(this.serverEndpoint);
     }
 }
 

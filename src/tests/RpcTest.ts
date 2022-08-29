@@ -1,13 +1,8 @@
 import { RpcWrapper } from "..";
-import { JsonRpc } from "eosjs";
-
-import fetch from "node-fetch";
-
 import config from "./test_config";
 
 async function main() {
-    const rpc = new JsonRpc(config.SERVER_ENDPOINT, { fetch });
-    const rpcWrapper = new RpcWrapper(rpc);
+    const rpcWrapper = new RpcWrapper(config.SERVER_ENDPOINT);
 
     const data = await rpcWrapper.fetchTable({
         code: "swap.box",

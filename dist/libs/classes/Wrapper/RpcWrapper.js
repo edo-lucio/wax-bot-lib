@@ -35,13 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RpcWrapper = void 0;
 /* eslint-disable require-jsdoc */
 var utils_1 = require("../../utils/utils");
+var eosjs_1 = require("eosjs");
+var node_fetch_1 = __importDefault(require("node-fetch"));
 var RpcWrapper = /** @class */ (function () {
-    function RpcWrapper(rpc) {
-        this.rpc = rpc;
+    function RpcWrapper(serverEndpoint) {
+        this.rpc = new eosjs_1.JsonRpc(serverEndpoint, { fetch: node_fetch_1.default });
     }
     /*
      - get a wallet balance
@@ -103,22 +108,50 @@ var RpcWrapper = /** @class */ (function () {
     - get data from a contract's table
        - incorporated error handling
        */
-    RpcWrapper.prototype.fetchTable = function (tableOptions) {
+    RpcWrapper.prototype.fetchTable = function (_a) {
+        var code = _a.code, scope = _a.scope, table = _a.table, index_position = _a.index_position, limit = _a.limit, lower_bound = _a.lower_bound, upper_bound = _a.upper_bound, reverse = _a.reverse, show_payer = _a.show_payer, json = _a.json, key_type = _a.key_type;
         return __awaiter(this, void 0, void 0, function () {
-            var res, error_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var tableOptions, res, error_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.rpc.get_table_rows(tableOptions)];
+                        tableOptions = {
+                            code: code,
+                            scope: scope,
+                            table: table,
+                            index_position: index_position || 1,
+                            limit: limit || 1000,
+                            lower_bound: lower_bound || null,
+                            upper_bound: upper_bound || null,
+                            reverse: reverse || true,
+                            show_payer: show_payer || false,
+                            json: json || true,
+                            key_type: key_type || undefined,
+                        };
+                        _b.label = 1;
                     case 1:
-                        res = _a.sent();
-                        return [2 /*return*/, res];
+                        _b.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.rpc.get_table_rows(tableOptions)];
                     case 2:
-                        error_3 = _a.sent();
+                        res = _b.sent();
+                        return [2 /*return*/, res];
+                    case 3:
+                        error_3 = _b.sent();
                         console.log("\nCaught exception: " + error_3);
-                        return [2 /*return*/, this.fetchTable(tableOptions)];
-                    case 3: return [2 /*return*/];
+                        return [2 /*return*/, this.fetchTable({
+                                code: code,
+                                scope: scope,
+                                table: table,
+                                index_position: index_position,
+                                limit: limit,
+                                lower_bound: lower_bound,
+                                upper_bound: upper_bound,
+                                reverse: reverse,
+                                show_payer: show_payer,
+                                json: json,
+                                key_type: key_type,
+                            })];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

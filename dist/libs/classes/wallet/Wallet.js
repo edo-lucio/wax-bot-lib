@@ -33,7 +33,7 @@ var Wallet = /** @class */ (function () {
             signatureProvider: signatureProvider,
         });
         this.rpc = rpc;
-        this.rpcWrap = new RpcWrapper_1.RpcWrapper(rpc);
+        this.rpcWrap = new RpcWrapper_1.RpcWrapper(this.serverEndpoint);
     };
     return Wallet;
 }());

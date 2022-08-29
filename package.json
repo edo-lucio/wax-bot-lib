@@ -1,6 +1,6 @@
 {
     "name": "wax-bot-lib",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "wax library for bots",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
