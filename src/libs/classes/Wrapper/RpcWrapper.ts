@@ -58,47 +58,13 @@ class RpcWrapper {
     - get data from a contract's table 
        - incorporated error handling 
        */
-    async fetchTable({
-        code,
-        scope,
-        table,
-        limit,
-        lower_bound,
-        upper_bound,
-        index_position,
-        key_type,
-        reverse,
-    }: any): Promise<any> {
-        const tableOptions = {
-            code: code,
-            scope: scope,
-            table: table,
-            index_position: index_position || 1,
-            limit: limit || 1000,
-            lower_bound: lower_bound || null,
-            upper_bound: upper_bound || null,
-            reverse: reverse || true,
-            show_payer: false,
-            json: true,
-            key_type: key_type,
-        };
-
+    async fetchTable(tableOptions: object): Promise<any> {
         try {
             const res = await this.rpc.get_table_rows(tableOptions);
             return res;
         } catch (error) {
             console.log("\nCaught exception: " + error);
-            return this.fetchTable({
-                code,
-                scope,
-                table,
-                limit,
-                lower_bound,
-                upper_bound,
-                index_position,
-                key_type,
-                reverse,
-            });
+            return this.fetchTable(tableOptions);
         }
     }
 }
