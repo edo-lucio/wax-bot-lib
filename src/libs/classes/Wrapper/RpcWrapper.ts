@@ -4,6 +4,7 @@ import { JsonRpc } from "eosjs";
 
 import fetch from "node-fetch";
 
+/* this wrapper has some rpc functions with error handling */
 class RpcWrapper {
     rpc: JsonRpc;
 
@@ -11,10 +12,7 @@ class RpcWrapper {
         this.rpc = new JsonRpc(serverEndpoint, { fetch });
     }
 
-    /*
-     - get a wallet balance
-       - incorporated error handling 
-       */
+    /*- get a wallet balance */
     async getAssetBalance(
         tokenDomain: string,
         walletAddress: string,
@@ -33,7 +31,6 @@ class RpcWrapper {
             return 0.0;
         } catch (error) {
             console.log("\nCaught exception: " + error);
-            await Utils.sleep(8000);
             return this.getAssetBalance(
                 tokenDomain,
                 walletAddress,
@@ -42,25 +39,20 @@ class RpcWrapper {
         }
     }
 
-    /* 
-    - get wallet informations 
-       - incorporated error handling 
-       */
+    /* - get wallet informations */
     async getAccount(walletAddress: string): Promise<any> {
         try {
             const accountData = await this.rpc.get_account(walletAddress);
             return accountData;
         } catch (error) {
-            await Utils.sleep(4000);
+            console.log("\nCaught exception: " + error);
             return this.getAccount(walletAddress);
         }
     }
 
     /* 
-    - get data from a contract's table 
-       - incorporated error handling 
-       */
-    async fetchTable(a: {
+    - get data from a contract's table */
+    async fetchTable(table_options: {
         code: string;
         scope: string;
         table: string;
@@ -73,13 +65,12 @@ class RpcWrapper {
         json?: boolean;
         key_type?: string;
     }): Promise<unknown> {
-        const tableOptions = a;
         try {
-            const res = await this.rpc.get_table_rows(tableOptions);
+            const res = await this.rpc.get_table_rows(table_options);
             return res;
         } catch (error) {
             console.log("\nCaught exception: " + error);
-            return this.fetchTable(a);
+            return this.fetchTable(table_options);
         }
     }
 }

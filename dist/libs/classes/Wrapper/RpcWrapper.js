@@ -40,25 +40,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RpcWrapper = void 0;
-/* eslint-disable require-jsdoc */
-var utils_1 = require("../../utils/utils");
 var eosjs_1 = require("eosjs");
 var node_fetch_1 = __importDefault(require("node-fetch"));
+/* this wrapper has some rpc functions with error handling */
 var RpcWrapper = /** @class */ (function () {
     function RpcWrapper(serverEndpoint) {
         this.rpc = new eosjs_1.JsonRpc(serverEndpoint, { fetch: node_fetch_1.default });
     }
-    /*
-     - get a wallet balance
-       - incorporated error handling
-       */
+    /*- get a wallet balance */
     RpcWrapper.prototype.getAssetBalance = function (tokenDomain, walletAddress, tokenSymbol) {
         return __awaiter(this, void 0, void 0, function () {
             var tokenBalance, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 4]);
+                        _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.rpc.get_currency_balance(tokenDomain, walletAddress, tokenSymbol)];
                     case 1:
                         tokenBalance = _a.sent();
@@ -69,64 +65,51 @@ var RpcWrapper = /** @class */ (function () {
                     case 2:
                         error_1 = _a.sent();
                         console.log("\nCaught exception: " + error_1);
-                        return [4 /*yield*/, utils_1.Utils.sleep(8000)];
-                    case 3:
-                        _a.sent();
                         return [2 /*return*/, this.getAssetBalance(tokenDomain, walletAddress, tokenSymbol)];
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    /*
-    - get wallet informations
-       - incorporated error handling
-       */
+    /* - get wallet informations */
     RpcWrapper.prototype.getAccount = function (walletAddress) {
         return __awaiter(this, void 0, void 0, function () {
             var accountData, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 4]);
+                        _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.rpc.get_account(walletAddress)];
                     case 1:
                         accountData = _a.sent();
                         return [2 /*return*/, accountData];
                     case 2:
                         error_2 = _a.sent();
-                        return [4 /*yield*/, utils_1.Utils.sleep(4000)];
-                    case 3:
-                        _a.sent();
+                        console.log("\nCaught exception: " + error_2);
                         return [2 /*return*/, this.getAccount(walletAddress)];
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     /*
-    - get data from a contract's table
-       - incorporated error handling
-       */
-    RpcWrapper.prototype.fetchTable = function (a) {
+    - get data from a contract's table */
+    RpcWrapper.prototype.fetchTable = function (table_options) {
         return __awaiter(this, void 0, void 0, function () {
-            var tableOptions, res, error_3;
+            var res, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        tableOptions = a;
-                        _a.label = 1;
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.rpc.get_table_rows(table_options)];
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.rpc.get_table_rows(tableOptions)];
-                    case 2:
                         res = _a.sent();
                         return [2 /*return*/, res];
-                    case 3:
+                    case 2:
                         error_3 = _a.sent();
                         console.log("\nCaught exception: " + error_3);
-                        return [2 /*return*/, this.fetchTable(a)];
-                    case 4: return [2 /*return*/];
+                        return [2 /*return*/, this.fetchTable(table_options)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

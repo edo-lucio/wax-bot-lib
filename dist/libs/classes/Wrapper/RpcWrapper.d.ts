@@ -4,7 +4,7 @@ declare class RpcWrapper {
     constructor(serverEndpoint: string);
     getAssetBalance(tokenDomain: string, walletAddress: string, tokenSymbol: string): Promise<any>;
     getAccount(walletAddress: string): Promise<any>;
-    fetchTable(a: {
+    fetchTable(table_options: {
         code: string;
         scope: string;
         table: string;
