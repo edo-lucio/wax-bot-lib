@@ -2,7 +2,7 @@
 import { Api, JsonRpc } from "eosjs";
 import { JsSignatureProvider } from "eosjs/dist/eosjs-jssig"; // development only
 
-import { RpcWrapper } from "../Wrapper/RpcWrapper";
+import { RpcWrapper } from "../wrapper/RpcWrapper";
 import { WalletCredentials } from "../../interfaces/interfaces";
 
 import fetch from "node-fetch";

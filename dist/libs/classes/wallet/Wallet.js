@@ -7,7 +7,7 @@ exports.Wallet = void 0;
 /* eslint-disable require-jsdoc */
 var eosjs_1 = require("eosjs");
 var eosjs_jssig_1 = require("eosjs/dist/eosjs-jssig"); // development only
-var RpcWrapper_1 = require("../Wrapper/RpcWrapper");
+var RpcWrapper_1 = require("../wrapper/RpcWrapper");
 var node_fetch_1 = __importDefault(require("node-fetch"));
 var Wallet = /** @class */ (function () {
     function Wallet(serverEndpoint, executorWallet, coSignWallet) {

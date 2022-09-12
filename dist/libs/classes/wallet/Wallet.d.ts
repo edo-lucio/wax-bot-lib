@@ -1,5 +1,5 @@
 import { Api, JsonRpc } from "eosjs";
-import { RpcWrapper } from "../Wrapper/RpcWrapper";
+import { RpcWrapper } from "../wrapper/RpcWrapper";
 import { WalletCredentials } from "../../interfaces/interfaces";
 declare class Wallet {
     executorAddress: string;
