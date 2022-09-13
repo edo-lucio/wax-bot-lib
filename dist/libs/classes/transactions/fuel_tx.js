@@ -104,7 +104,6 @@ var FuelTransaction = /** @class */ (function () {
                     case 4:
                         json = _d.sent();
                         console.log("\nResponse (".concat(json.code, ") from resource provider api..."));
-                        console.log(json);
                         data = json.data;
                         _a = json.code;
                         switch (_a) {
@@ -136,7 +135,6 @@ var FuelTransaction = /** @class */ (function () {
                     case 9:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
-                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 10:
                         error_1 = _d.sent();
@@ -157,12 +155,10 @@ var FuelTransaction = /** @class */ (function () {
                         // Merge signatures from the user and the cosigned responsetab
                         signedTransaction.signatures = __spreadArray(__spreadArray([], signedTransaction.signatures, true), data.signatures, true);
                         console.log("\n\nSigned transaction using both cosigner and specified account\n");
-                        console.log(signedTransaction);
                         return [4 /*yield*/, this.wallet.api.pushSignedTransaction(signedTransaction)];
                     case 14:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
-                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 15:
                         {

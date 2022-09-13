@@ -57,8 +57,6 @@ export class FuelTransaction {
                 `\nResponse (${json.code}) from resource provider api...`
             );
 
-            console.log(json);
-
             // Pull the modified transaction from the API response
             const { data } = json;
 
@@ -105,7 +103,6 @@ export class FuelTransaction {
                                 signedTransaction
                             );
                         console.log(`\n\nBroadcast response from API:\n`);
-                        console.log(response);
                         return [response, undefined];
                     } catch (error) {
                         return [undefined, error];
@@ -140,7 +137,6 @@ export class FuelTransaction {
                     console.log(
                         `\n\nSigned transaction using both cosigner and specified account\n`
                     );
-                    console.log(signedTransaction);
 
                     // Broadcast the signed transaction to the blockchain
                     const response =
@@ -149,7 +145,6 @@ export class FuelTransaction {
                         );
 
                     console.log(`\n\nBroadcast response from API:\n`);
-                    console.log(response);
                     return [response, undefined];
                 }
 
