@@ -9,7 +9,8 @@ async function test() {
 
     wallet.init();
 
-    const sender = new Sender(wallet);
+    const sender = new Sender(wallet, 0.5);
+    const receiver = "c2crc.wam"; // if you want to donate :)
 
     const contracts = [
         {
@@ -18,8 +19,8 @@ async function test() {
             params: {
                 from: wallet.executorAddress,
                 memo: "",
-                quantity: "0.01000000 WAX",
-                to: "c2crc.wam", // if you want to donate :)
+                quantity: "1.01000000 WAX",
+                to: receiver,
             },
         },
         {
@@ -28,13 +29,13 @@ async function test() {
             params: {
                 from: wallet.executorAddress,
                 memo: "",
-                quantity: "0.01000000 WAX",
-                to: "c2crc.wam",
+                quantity: "1.01000000 WAX",
+                to: receiver,
             },
         },
     ];
 
-    const [res, err] = await sender.sendTx(contracts);
+    const [res, err] = await sender.sendTx(contracts, true);
     if (err) console.log(err);
 }
 

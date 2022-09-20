@@ -44,18 +44,18 @@ var helpers_2 = require("./helpers");
 var reg_tx_1 = require("./reg_tx");
 var fuel_tx_1 = require("./fuel_tx");
 /* - Send transaction
-   - Accepts a wallet and a tx data
    - There are two main scenarios: one where the wallet needs a fuel tx, and one where it doesn't
    - Need it case: first it tries to send a fuel tx; if fails sends a regular one with executor auth; if fails sends a cosigned one (if cosigner is specified)
    - Other case: If cpu is available tries to send a regular tx with wallet's resources; if fails sends a cosigned one (cosigner must be specified)
    */
 var Sender = /** @class */ (function () {
-    function Sender(wallet) {
+    function Sender(wallet, maxTxFee) {
         this.wallet = wallet;
+        this.maxTxFee = maxTxFee || 0;
         this.reg = new reg_tx_1.RegularTransaction(wallet);
-        this.fuel = new fuel_tx_1.FuelTransaction(wallet);
+        this.fuel = new fuel_tx_1.FuelTransaction(wallet, this.maxTxFee);
     }
-    Sender.prototype.sendTx = function (txData) {
+    Sender.prototype.sendTx = function (txData, fuelTx) {
         return __awaiter(this, void 0, void 0, function () {
             var fullTxData, needIt, _a, accepted, rejected, _b, success_1, error_1, _c, success, error;
             return __generator(this, function (_d) {
@@ -65,7 +65,7 @@ var Sender = /** @class */ (function () {
                         return [4 /*yield*/, (0, helpers_2.needForFuelTx)(this.wallet)];
                     case 1:
                         needIt = _d.sent();
-                        if (!needIt) return [3 /*break*/, 4];
+                        if (!(needIt && fuelTx)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.fuel.send(fullTxData)];
                     case 2:
                         _a = _d.sent(), accepted = _a[0], rejected = _a[1];

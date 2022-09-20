@@ -1,7 +1,8 @@
 import { Wallet } from "../wallet/Wallet";
 export declare class FuelTransaction {
     wallet: Wallet;
-    constructor(wallet: Wallet);
+    maxFee: number;
+    constructor(wallet: Wallet, maxFee: number);
     send(txData: any): Promise<any>;
     signModifiedTransaction(modifiedTransaction: any): Promise<import("eosjs/dist/eosjs-rpc-interfaces").PushTransactionArgs>;
     validateTransaction(signer: any, modifiedTransaction: any, serializedTransaction: any, costs?: boolean): Promise<void>;

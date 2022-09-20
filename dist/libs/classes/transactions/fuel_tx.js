@@ -65,8 +65,9 @@ var eosjs_1 = require("eosjs");
 var eosjs_ecc_1 = __importDefault(require("eosjs-ecc"));
 var consts_1 = require("../../../consts");
 var FuelTransaction = /** @class */ (function () {
-    function FuelTransaction(wallet) {
+    function FuelTransaction(wallet, maxFee) {
         this.wallet = wallet;
+        this.maxFee = maxFee;
     }
     FuelTransaction.prototype.send = function (txData) {
         return __awaiter(this, void 0, void 0, function () {
@@ -113,6 +114,8 @@ var FuelTransaction = /** @class */ (function () {
                         }
                         return [3 /*break*/, 16];
                     case 5:
+                        if (this.maxFee === 0)
+                            return [2 /*return*/, [undefined, "refused"]];
                         _b = data.request, modifiedTransaction = _b[1];
                         console.log("\n\nResource Provider provided signature in exchange for a fee\n");
                         // Ensure the modifed transaction is what the application expects
@@ -135,6 +138,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 9:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
+                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 10:
                         error_1 = _d.sent();
@@ -159,6 +163,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 14:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
+                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 15:
                         {
@@ -259,7 +264,7 @@ var FuelTransaction = /** @class */ (function () {
             expectedNewActions += 1;
             // If there is a RAM cost associated with this transaction, 1 new actio is added (the ram purchase)
             console.log(costs);
-            if (costs.ram !== "0.0000 EOS") {
+            if (costs.ram !== "0.00000000 WAX") {
                 expectedNewActions += 1;
             }
         }
@@ -290,19 +295,17 @@ var FuelTransaction = /** @class */ (function () {
     // Ensure the transaction fee transfer is valid
     FuelTransaction.prototype.validateActionsFeeContent = function (signer, modifiedTransaction) {
         return __awaiter(this, void 0, void 0, function () {
-            var maxFee, feeAction, amount;
+            var feeAction, amount;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        maxFee = 0;
-                        return [4 /*yield*/, this.wallet.api.deserializeActions([
-                                modifiedTransaction.actions[1],
-                            ])];
+                    case 0: return [4 /*yield*/, this.wallet.api.deserializeActions([
+                            modifiedTransaction.actions[1],
+                        ])];
                     case 1:
                         feeAction = (_a.sent())[0];
                         amount = parseFloat(feeAction.data.quantity.split(" ")[0]);
-                        if (amount > maxFee) {
-                            throw new Error("Fee of ".concat(amount, " exceeds the maximum fee of ").concat(maxFee, "."));
+                        if (amount > this.maxFee) {
+                            throw new Error("Fee of ".concat(amount, " exceeds the maximum fee of ").concat(this.maxFee, "."));
                         }
                         if (feeAction.account !== "eosio.token" ||
                             feeAction.name !== "transfer" ||
@@ -362,8 +365,8 @@ var FuelTransaction = /** @class */ (function () {
                         .authorization[0].permission ||
                 modifiedTransaction.actions[i].data.toLowerCase() !==
                     deserializedTransaction.actions[i - expectedNewActions].data.toLowerCase()) {
-                var _b = deserializedTransaction.actions[i - expectedNewActions], account = _b.account, name_1 = _b.name;
-                throw new Error("Transaction returned by API has non-matching action at index ".concat(i, " (").concat(account, ":").concat(name_1, ")"));
+                var _b = deserializedTransaction.actions[i - expectedNewActions], account = _b.account, name = _b.name;
+                throw new Error("Transaction returned by API has non-matching action at index ".concat(i, " (").concat(account, ":").concat(name, ")"));
             }
         }
     };

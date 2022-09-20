@@ -8,9 +8,11 @@ import { consts } from "../../../consts";
 
 export class FuelTransaction {
     wallet: Wallet;
+    maxFee: number;
 
-    constructor(wallet: Wallet) {
+    constructor(wallet: Wallet, maxFee: number) {
         this.wallet = wallet;
+        this.maxFee = maxFee;
     }
 
     async send(txData: any): Promise<any> {
@@ -61,15 +63,17 @@ export class FuelTransaction {
             const { data } = json;
 
             /*
-                    Based on the response code, perform different functions
-                    200 = Signature provided, no fee required (a free transaction)
-                    400 = Resource Provider refused to provide a signature (for any reason)
-                    402 = Signature provided, but a fee is required (fee-based transaction)
+                Based on the response code, perform different functions
+                200 = Signature provided, no fee required (a free transaction)
+                400 = Resource Provider refused to provide a signature (for any reason)
+                402 = Signature provided, but a fee is required (fee-based transaction)
             */
+
             switch (json.code) {
                 case 402: {
-                    const [, modifiedTransaction] = data.request;
+                    if (this.maxFee === 0) return [undefined, "refused"];
 
+                    const [, modifiedTransaction] = data.request;
                     console.log(
                         `\n\nResource Provider provided signature in exchange for a fee\n`
                     );
@@ -92,6 +96,7 @@ export class FuelTransaction {
                         ...signedTransaction.signatures,
                         ...data.signatures,
                     ];
+
                     console.log(
                         `\n\nSigned transaction using both cosigner and specified account\n`
                     );
@@ -103,6 +108,8 @@ export class FuelTransaction {
                                 signedTransaction
                             );
                         console.log(`\n\nBroadcast response from API:\n`);
+                        console.log(response);
+
                         return [response, undefined];
                     } catch (error) {
                         return [undefined, error];
@@ -145,6 +152,8 @@ export class FuelTransaction {
                         );
 
                     console.log(`\n\nBroadcast response from API:\n`);
+                    console.log(response);
+
                     return [response, undefined];
                 }
 
@@ -252,7 +261,7 @@ export class FuelTransaction {
             expectedNewActions += 1;
             // If there is a RAM cost associated with this transaction, 1 new actio is added (the ram purchase)
             console.log(costs);
-            if (costs.ram !== "0.0000 EOS") {
+            if (costs.ram !== "0.00000000 WAX") {
                 expectedNewActions += 1;
             }
         }
@@ -289,15 +298,14 @@ export class FuelTransaction {
 
     // Ensure the transaction fee transfer is valid
     async validateActionsFeeContent(signer: any, modifiedTransaction: any) {
-        const maxFee = 0;
-
         const [feeAction] = await this.wallet.api.deserializeActions([
             modifiedTransaction.actions[1],
         ]);
+
         const amount = parseFloat(feeAction.data.quantity.split(" ")[0]);
-        if (amount > maxFee) {
+        if (amount > this.maxFee) {
             throw new Error(
-                `Fee of ${amount} exceeds the maximum fee of ${maxFee}.`
+                `Fee of ${amount} exceeds the maximum fee of ${this.maxFee}.`
             );
         }
         if (

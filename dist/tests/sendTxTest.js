@@ -45,13 +45,14 @@ var __2 = require("..");
 var test_config_1 = __importDefault(require("./test_config"));
 function test() {
     return __awaiter(this, void 0, void 0, function () {
-        var wallet, sender, contracts, _a, res, err;
+        var wallet, sender, receiver, contracts, _a, res, err;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     wallet = new __2.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET);
                     wallet.init();
-                    sender = new __1.Sender(wallet);
+                    sender = new __1.Sender(wallet, 0.5);
+                    receiver = "c2crc.wam";
                     contracts = [
                         {
                             contract_name: "eosio.token",
@@ -59,8 +60,8 @@ function test() {
                             params: {
                                 from: wallet.executorAddress,
                                 memo: "",
-                                quantity: "0.01000000 WAX",
-                                to: "c2crc.wam", // if you want to donate :)
+                                quantity: "1.01000000 WAX",
+                                to: receiver,
                             },
                         },
                         {
@@ -69,12 +70,12 @@ function test() {
                             params: {
                                 from: wallet.executorAddress,
                                 memo: "",
-                                quantity: "0.01000000 WAX",
-                                to: "c2crc.wam",
+                                quantity: "1.01000000 WAX",
+                                to: receiver,
                             },
                         },
                     ];
-                    return [4 /*yield*/, sender.sendTx(contracts)];
+                    return [4 /*yield*/, sender.sendTx(contracts, true)];
                 case 1:
                     _a = _b.sent(), res = _a[0], err = _a[1];
                     if (err)
