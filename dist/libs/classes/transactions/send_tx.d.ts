@@ -5,6 +5,7 @@ export declare class Sender {
     wallet: Wallet;
     reg: RegularTransaction;
     fuel: FuelTransaction;
-    constructor(wallet: Wallet);
-    sendTx(txData: object[]): Promise<any>;
+    maxTxFee?: number;
+    constructor(wallet: Wallet, maxTxFee?: number);
+    sendTx(txData: object[], fuelTx: boolean, maxFuelFee?: number): Promise<any>;
 }

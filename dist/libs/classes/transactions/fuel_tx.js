@@ -65,10 +65,11 @@ var eosjs_1 = require("eosjs");
 var eosjs_ecc_1 = __importDefault(require("eosjs-ecc"));
 var consts_1 = require("../../../consts");
 var FuelTransaction = /** @class */ (function () {
-    function FuelTransaction(wallet) {
+    function FuelTransaction(wallet, maxFee) {
         this.wallet = wallet;
+        this.maxFee = maxFee;
     }
-    FuelTransaction.prototype.send = function (txData) {
+    FuelTransaction.prototype.send = function (txData, maxFee) {
         return __awaiter(this, void 0, void 0, function () {
             var newTxData, signers, signer, transaction, deserializedTransaction, cosigned, json, data, _a, _b, modifiedTransaction, signedTransaction, response, error_1, _c, modifiedTransaction, signedTransaction, response, error_2;
             return __generator(this, function (_d) {
@@ -113,6 +114,8 @@ var FuelTransaction = /** @class */ (function () {
                         }
                         return [3 /*break*/, 16];
                     case 5:
+                        if (maxFee == 0)
+                            return [2 /*return*/, [undefined, "refused"]];
                         _b = data.request, modifiedTransaction = _b[1];
                         console.log("\n\nResource Provider provided signature in exchange for a fee\n");
                         // Ensure the modifed transaction is what the application expects
@@ -362,8 +365,8 @@ var FuelTransaction = /** @class */ (function () {
                         .authorization[0].permission ||
                 modifiedTransaction.actions[i].data.toLowerCase() !==
                     deserializedTransaction.actions[i - expectedNewActions].data.toLowerCase()) {
-                var _b = deserializedTransaction.actions[i - expectedNewActions], account = _b.account, name_1 = _b.name;
-                throw new Error("Transaction returned by API has non-matching action at index ".concat(i, " (").concat(account, ":").concat(name_1, ")"));
+                var _b = deserializedTransaction.actions[i - expectedNewActions], account = _b.account, name = _b.name;
+                throw new Error("Transaction returned by API has non-matching action at index ".concat(i, " (").concat(account, ":").concat(name, ")"));
             }
         }
     };
