@@ -1,7 +1,7 @@
 export const consts = Object.freeze({
     TAPOS_FIELD: {
         blocksBehind: 3,
-        expireSeconds: 30,
+        expireSeconds: 60,
     },
 
     RESOURCE_PROVIDER_ENDPOINT:
