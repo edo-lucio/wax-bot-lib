@@ -2,7 +2,6 @@
 /* eslint-disable require-jsdoc */
 
 import { setTxData } from "./helpers";
-import { needForFuelTx } from "./helpers";
 
 import { Wallet } from "../wallet/Wallet";
 
@@ -36,9 +35,8 @@ export class Sender {
 
     async sendTx(txData: object[], fuelTx?: boolean | false): Promise<any> {
         const fullTxData = setTxData(this.wallet, txData);
-        const needIt = await needForFuelTx(this.wallet);
 
-        if (needIt && fuelTx) {
+        if (fuelTx) {
             // try sending free transaction
             const [accepted, rejected] = await this.fuel.send(fullTxData);
             if (accepted) return [accepted, null];
@@ -46,12 +44,16 @@ export class Sender {
             // if fuel got rejected (requires fee or error) send regular transaction
             const [success, error] = await this.reg.send(fullTxData);
             if (success) return [success, null];
-            return [null, error]; // return possible dapp errors
+
+            // return possible dapp errors
+            return [null, error];
         }
 
         // cpu available: try regular tx
         const [success, error] = await this.reg.send(fullTxData);
         if (success) return [success, null];
-        return [null, error]; // return possible dapp errors
+
+        // return possible dapp errors
+        return [null, error];
     }
 }

@@ -40,7 +40,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sender = void 0;
 var helpers_1 = require("./helpers");
-var helpers_2 = require("./helpers");
 var reg_tx_1 = require("./reg_tx");
 var fuel_tx_1 = require("./fuel_tx");
 /* - Send transaction
@@ -57,32 +56,31 @@ var Sender = /** @class */ (function () {
     }
     Sender.prototype.sendTx = function (txData, fuelTx) {
         return __awaiter(this, void 0, void 0, function () {
-            var fullTxData, needIt, _a, accepted, rejected, _b, success_1, error_1, _c, success, error;
+            var fullTxData, _a, accepted, rejected, _b, success_1, error_1, _c, success, error;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
                         fullTxData = (0, helpers_1.setTxData)(this.wallet, txData);
-                        return [4 /*yield*/, (0, helpers_2.needForFuelTx)(this.wallet)];
-                    case 1:
-                        needIt = _d.sent();
-                        if (!(needIt && fuelTx)) return [3 /*break*/, 4];
+                        if (!fuelTx) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.fuel.send(fullTxData)];
-                    case 2:
+                    case 1:
                         _a = _d.sent(), accepted = _a[0], rejected = _a[1];
                         if (accepted)
                             return [2 /*return*/, [accepted, null]];
                         return [4 /*yield*/, this.reg.send(fullTxData)];
-                    case 3:
+                    case 2:
                         _b = _d.sent(), success_1 = _b[0], error_1 = _b[1];
                         if (success_1)
                             return [2 /*return*/, [success_1, null]];
-                        return [2 /*return*/, [null, error_1]]; // return possible dapp errors
-                    case 4: return [4 /*yield*/, this.reg.send(fullTxData)];
-                    case 5:
+                        // return possible dapp errors
+                        return [2 /*return*/, [null, error_1]];
+                    case 3: return [4 /*yield*/, this.reg.send(fullTxData)];
+                    case 4:
                         _c = _d.sent(), success = _c[0], error = _c[1];
                         if (success)
                             return [2 /*return*/, [success, null]];
-                        return [2 /*return*/, [null, error]]; // return possible dapp errors
+                        // return possible dapp errors
+                        return [2 /*return*/, [null, error]];
                 }
             });
         });
