@@ -5,12 +5,16 @@ import { Wallet } from "..";
 import config from "./test_config";
 
 async function test() {
-    const wallet = new Wallet(config.SERVER_ENDPOINT, config.WALLET);
+    const wallet = new Wallet(
+        config.SERVER_ENDPOINT,
+        config.WALLET,
+        config.COSIGN_WALLET
+    );
 
     wallet.init();
 
     const sender = new Sender(wallet, 0.5);
-    const receiver = "c2crc.wam"; // if you want to donate :)
+    const receiver = "marcantonio4"; // if you want to donate :)
 
     const contracts = [
         {
@@ -35,7 +39,7 @@ async function test() {
         },
     ];
 
-    const [res, err] = await sender.sendTx(contracts, true);
+    const [res, err] = await sender.sendTx(contracts);
     if (err) console.log(err);
 }
 

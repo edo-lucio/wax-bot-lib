@@ -42,6 +42,7 @@ exports.Sender = void 0;
 var helpers_1 = require("./helpers");
 var reg_tx_1 = require("./reg_tx");
 var fuel_tx_1 = require("./fuel_tx");
+var helpers_2 = require("./helpers");
 /* - Send transaction
    - There are two main scenarios: one where the wallet needs a fuel tx, and one where it doesn't
    - Need it case: first it tries to send a fuel tx; if fails sends a regular one with executor auth; if fails sends a cosigned one (if cosigner is specified)
@@ -61,6 +62,10 @@ var Sender = /** @class */ (function () {
                 switch (_d.label) {
                     case 0:
                         fullTxData = (0, helpers_1.setTxData)(this.wallet, txData);
+                        // set cosign if needed
+                        if (this.wallet.coSignAddress) {
+                            fullTxData = (0, helpers_2.setCosign)(this.wallet, fullTxData);
+                        }
                         if (!fuelTx) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.fuel.send(fullTxData)];
                     case 1:

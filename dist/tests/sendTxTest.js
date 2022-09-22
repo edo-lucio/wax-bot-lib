@@ -49,10 +49,10 @@ function test() {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    wallet = new __2.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET);
+                    wallet = new __2.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET, test_config_1.default.COSIGN_WALLET);
                     wallet.init();
                     sender = new __1.Sender(wallet, 0.5);
-                    receiver = "c2crc.wam";
+                    receiver = "marcantonio4";
                     contracts = [
                         {
                             contract_name: "eosio.token",
@@ -75,7 +75,7 @@ function test() {
                             },
                         },
                     ];
-                    return [4 /*yield*/, sender.sendTx(contracts, true)];
+                    return [4 /*yield*/, sender.sendTx(contracts)];
                 case 1:
                     _a = _b.sent(), res = _a[0], err = _a[1];
                     if (err)

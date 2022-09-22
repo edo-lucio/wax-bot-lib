@@ -8,6 +8,8 @@ import { Wallet } from "../wallet/Wallet";
 import { RegularTransaction } from "./reg_tx";
 import { FuelTransaction } from "./fuel_tx";
 
+import { setCosign } from "./helpers";
+
 /* - Send transaction
    - There are two main scenarios: one where the wallet needs a fuel tx, and one where it doesn't 
    - Need it case: first it tries to send a fuel tx; if fails sends a regular one with executor auth; if fails sends a cosigned one (if cosigner is specified)
@@ -34,7 +36,12 @@ export class Sender {
     }
 
     async sendTx(txData: object[], fuelTx?: boolean | false): Promise<any> {
-        const fullTxData = setTxData(this.wallet, txData);
+        let fullTxData = setTxData(this.wallet, txData);
+
+        // set cosign if needed
+        if (this.wallet.coSignAddress) {
+            fullTxData = setCosign(this.wallet, fullTxData);
+        }
 
         if (fuelTx) {
             // try sending free transaction
