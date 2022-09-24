@@ -39,7 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegularTransaction = void 0;
 /* eslint-disable require-jsdoc */
 var eosjs_1 = require("eosjs");
-var helpers_1 = require("./helpers");
 var consts_1 = require("../../../consts");
 var RegularTransaction = /** @class */ (function () {
     function RegularTransaction(wallet) {
@@ -47,7 +46,7 @@ var RegularTransaction = /** @class */ (function () {
     }
     RegularTransaction.prototype.send = function (txData) {
         return __awaiter(this, void 0, void 0, function () {
-            var res, err_1, cosignedTxData, cosignedTxData;
+            var res, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -61,15 +60,13 @@ var RegularTransaction = /** @class */ (function () {
                         err_1 = _a.sent();
                         if (err_1 instanceof eosjs_1.RpcError) {
                             console.log(this.wallet.executorAddress, err_1.details[0].message);
-                            // add cosigner if it's a CPU error
+                            // retry transaction if it's a CPU error
                             if (String(err_1.details[0].message).includes("CPU")) {
-                                cosignedTxData = (0, helpers_1.setCosign)(this.wallet, txData);
-                                return [2 /*return*/, this.send(cosignedTxData)];
+                                return [2 /*return*/, this.send(txData)];
                             }
-                            // add cosigner if it's a NET error
+                            // retry transaction if it's a NET error
                             if (String(err_1.details[0].message).includes("net usage")) {
-                                cosignedTxData = (0, helpers_1.setCosign)(this.wallet, txData);
-                                return [2 /*return*/, this.send(cosignedTxData)];
+                                return [2 /*return*/, this.send(txData)];
                             }
                             // retry transaction if it's a Fetch error
                             if (String(err_1.details[0].message).includes("FetchError")) {

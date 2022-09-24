@@ -51,7 +51,7 @@ function test() {
                 case 0:
                     wallet = new __2.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET, test_config_1.default.COSIGN_WALLET);
                     wallet.init();
-                    sender = new __1.Sender(wallet, 0.5);
+                    sender = new __1.Sender(wallet, 0.8);
                     receiver = "marcantonio4";
                     contracts = [
                         {
