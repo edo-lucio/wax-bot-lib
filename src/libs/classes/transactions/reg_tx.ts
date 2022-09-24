@@ -27,16 +27,14 @@ export class RegularTransaction {
                     err.details[0].message
                 );
 
-                // add cosigner if it's a CPU error
+                // retry transaction if it's a CPU error
                 if (String(err.details[0].message).includes("CPU")) {
-                    const cosignedTxData = setCosign(this.wallet, txData);
-                    return this.send(cosignedTxData);
+                    return this.send(txData);
                 }
 
-                // add cosigner if it's a NET error
+                // retry transaction if it's a NET error
                 if (String(err.details[0].message).includes("net usage")) {
-                    const cosignedTxData = setCosign(this.wallet, txData);
-                    return this.send(cosignedTxData);
+                    return this.send(txData);
                 }
 
                 // retry transaction if it's a Fetch error

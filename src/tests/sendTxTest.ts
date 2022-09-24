@@ -13,7 +13,7 @@ async function test() {
 
     wallet.init();
 
-    const sender = new Sender(wallet, 0.5);
+    const sender = new Sender(wallet, 0.8);
     const receiver = "marcantonio4"; // if you want to donate :)
 
     const contracts = [
