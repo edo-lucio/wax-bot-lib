@@ -17,7 +17,7 @@ export class RegularTransaction {
             return [res, null];
         } catch (err: any) {
             if (err instanceof RpcError) {
-                console.log(err);
+                console.log(err.details[0].message);
                 // retry transaction if it's a CPU error
                 if (String(err.details[0].message).includes("CPU")) {
                     txData = switchAuth(txData);

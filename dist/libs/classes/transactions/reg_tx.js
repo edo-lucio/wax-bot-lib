@@ -58,7 +58,7 @@ var RegularTransaction = /** @class */ (function () {
                     case 2:
                         err_1 = _a.sent();
                         if (err_1 instanceof eosjs_1.RpcError) {
-                            console.log(err_1);
+                            console.log(err_1.details[0].message);
                             // retry transaction if it's a CPU error
                             if (String(err_1.details[0].message).includes("CPU")) {
                                 txData = (0, helpers_1.switchAuth)(txData);
