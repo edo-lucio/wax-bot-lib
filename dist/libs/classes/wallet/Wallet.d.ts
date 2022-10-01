@@ -10,7 +10,11 @@ declare class Wallet {
     api: Api;
     rpc: JsonRpc;
     rpcWrap: RpcWrapper;
-    constructor(serverEndpoint: string, executorWallet: WalletCredentials, coSignWallet?: WalletCredentials);
+    constructor(
+        serverEndpoint: string,
+        executorWallet: WalletCredentials,
+        coSignWallet?: WalletCredentials
+    );
     init(): void;
 }
 export { Wallet };
