@@ -50,7 +50,6 @@ export class Sender {
             // try sending free transaction
             const [accepted, rejected] = await this.fuel.send(fullTxData);
             if (accepted) return [accepted, null];
-            console.log(rejected);
 
             // if fuel got rejected (requires fee or error) send regular transaction
             const [success, error] = await this.reg.send(fullTxData, TAPOS);

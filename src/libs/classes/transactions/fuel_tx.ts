@@ -63,7 +63,6 @@ export class FuelTransaction {
 
             // Pull the modified transaction from the API response
             const { data } = json;
-            console.log(json);
 
             /*
                 Based on the response code, perform different functions
@@ -111,6 +110,7 @@ export class FuelTransaction {
                                 signedTransaction
                             );
                         console.log(`\n\nBroadcast response from API:\n`);
+                        console.log(response);
 
                         return [response, undefined];
                     } catch (error) {
@@ -155,6 +155,7 @@ export class FuelTransaction {
                         );
 
                     console.log(`\n\nBroadcast response from API:\n`);
+                    console.log(response);
 
                     return [response, undefined];
                 }

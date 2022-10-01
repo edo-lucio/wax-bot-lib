@@ -108,7 +108,6 @@ var FuelTransaction = /** @class */ (function () {
                         json = _d.sent();
                         console.log("\nResponse (".concat(json.code, ") from resource provider api..."));
                         data = json.data;
-                        console.log(json);
                         _a = json.code;
                         switch (_a) {
                             case 402: return [3 /*break*/, 5];
@@ -141,6 +140,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 9:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
+                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 10:
                         error_1 = _d.sent();
@@ -166,6 +166,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 14:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
+                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 15:
                         {

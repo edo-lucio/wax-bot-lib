@@ -53,6 +53,7 @@ var RegularTransaction = /** @class */ (function () {
                         return [4 /*yield*/, this.wallet.api.transact(txData, tapos)];
                     case 1:
                         res = _a.sent();
+                        console.log(res);
                         return [2 /*return*/, [res, null]];
                     case 2:
                         err_1 = _a.sent();

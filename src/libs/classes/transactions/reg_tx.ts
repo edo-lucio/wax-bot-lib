@@ -13,6 +13,7 @@ export class RegularTransaction {
     async send(txData: any, tapos: object): Promise<any> {
         try {
             const res = await this.wallet.api.transact(txData, tapos);
+            console.log(res);
             return [res, null];
         } catch (err: any) {
             if (err instanceof RpcError) {

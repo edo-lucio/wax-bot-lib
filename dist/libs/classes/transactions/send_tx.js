@@ -71,7 +71,6 @@ var Sender = /** @class */ (function () {
                         _a = _d.sent(), accepted = _a[0], rejected = _a[1];
                         if (accepted)
                             return [2 /*return*/, [accepted, null]];
-                        console.log(rejected);
                         return [4 /*yield*/, this.reg.send(fullTxData, TAPOS)];
                     case 2:
                         _b = _d.sent(), success_1 = _b[0], error_1 = _b[1];
