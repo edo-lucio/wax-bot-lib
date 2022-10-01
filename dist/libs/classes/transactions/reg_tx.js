@@ -37,51 +37,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegularTransaction = void 0;
-/* eslint-disable require-jsdoc */
+var helpers_1 = require("./helpers");
 var eosjs_1 = require("eosjs");
-var consts_1 = require("../../../consts");
 var RegularTransaction = /** @class */ (function () {
     function RegularTransaction(wallet) {
         this.wallet = wallet;
     }
-    RegularTransaction.prototype.send = function (txData) {
+    RegularTransaction.prototype.send = function (txData, tapos) {
         return __awaiter(this, void 0, void 0, function () {
             var res, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.wallet.api.transact(txData, consts_1.consts.TAPOS_FIELD)];
+                        return [4 /*yield*/, this.wallet.api.transact(txData, tapos)];
                     case 1:
                         res = _a.sent();
-                        console.log(res);
                         return [2 /*return*/, [res, null]];
                     case 2:
                         err_1 = _a.sent();
                         if (err_1 instanceof eosjs_1.RpcError) {
-                            console.log(this.wallet.executorAddress, err_1.details[0].message);
+                            console.log(err_1);
                             // retry transaction if it's a CPU error
                             if (String(err_1.details[0].message).includes("CPU")) {
-                                return [2 /*return*/, this.send(txData)];
+                                txData = (0, helpers_1.switchAuth)(txData);
+                                return [2 /*return*/, this.send(txData, tapos)];
                             }
                             // retry transaction if it's a NET error
                             if (String(err_1.details[0].message).includes("net usage")) {
-                                return [2 /*return*/, this.send(txData)];
+                                txData = (0, helpers_1.switchAuth)(txData);
+                                return [2 /*return*/, this.send(txData, tapos)];
                             }
                             // retry transaction if it's a Fetch error
                             if (String(err_1.details[0].message).includes("FetchError")) {
-                                return [2 /*return*/, this.send(txData)]; // retry process
+                                return [2 /*return*/, this.send(txData, tapos)]; // retry process
                             }
                             // retry transaction if it's a duplicate
                             if (String(err_1.details[0].message).includes("duplicate")) {
-                                return [2 /*return*/, this.send(txData)]; // retry process
+                                return [2 /*return*/, this.send(txData, tapos)]; // retry process
                             }
                             // return the error if it's none of the above (this might be a specific dapp dependent error)
                             return [2 /*return*/, [null, String(err_1.details[0].message)]];
                         }
                         // retry transaction if it's a Fetch error
                         if (String(err_1).includes("FetchError")) {
-                            return [2 /*return*/, this.send(txData)]; // retry process
+                            return [2 /*return*/, this.send(txData, tapos)]; // retry process
                         }
                         return [2 /*return*/, [null, String(err_1)]];
                     case 3: return [2 /*return*/];

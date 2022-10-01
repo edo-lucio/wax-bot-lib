@@ -69,6 +69,8 @@ var FuelTransaction = /** @class */ (function () {
         this.wallet = wallet;
         this.maxFee = maxFee;
     }
+    /* try a fuel transaction
+    only works for executor wallet (not for the cosigner) when insufficient resources */
     FuelTransaction.prototype.send = function (txData) {
         return __awaiter(this, void 0, void 0, function () {
             var newTxData, signers, signer, transaction, deserializedTransaction, cosigned, json, data, _a, _b, modifiedTransaction, signedTransaction, response, error_1, _c, modifiedTransaction, signedTransaction, response, error_2;
@@ -77,7 +79,7 @@ var FuelTransaction = /** @class */ (function () {
                     case 0:
                         newTxData = JSON.parse(JSON.stringify(txData));
                         signers = txData.actions[0].authorization;
-                        signer = signers.length > 1 ? signers[1] : signers[0];
+                        signer = signers[signers.length - 1];
                         // add it to transaction data
                         newTxData.actions[0].authorization = [signer];
                         _d.label = 1;
@@ -106,6 +108,7 @@ var FuelTransaction = /** @class */ (function () {
                         json = _d.sent();
                         console.log("\nResponse (".concat(json.code, ") from resource provider api..."));
                         data = json.data;
+                        console.log(json);
                         _a = json.code;
                         switch (_a) {
                             case 402: return [3 /*break*/, 5];
@@ -138,10 +141,10 @@ var FuelTransaction = /** @class */ (function () {
                     case 9:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
-                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 10:
                         error_1 = _d.sent();
+                        console.log(error_1);
                         return [2 /*return*/, [undefined, error_1]];
                     case 11:
                         _c = data.request, modifiedTransaction = _c[1];
@@ -163,7 +166,6 @@ var FuelTransaction = /** @class */ (function () {
                     case 14:
                         response = _d.sent();
                         console.log("\n\nBroadcast response from API:\n");
-                        console.log(response);
                         return [2 /*return*/, [response, undefined]];
                     case 15:
                         {

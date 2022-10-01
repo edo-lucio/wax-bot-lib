@@ -1,4 +1,4 @@
-import { Wallet } from "../wallet/Wallet";
+import { Wallet } from "../wallet/wallet";
 export declare class FuelTransaction {
     wallet: Wallet;
     maxFee: number;

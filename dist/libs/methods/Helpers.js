@@ -1,39 +1,8 @@
 "use strict";
-// /* eslint-disable require-jsdoc */
-// import axios from "axios";
-// import { Utils } from "../utils/utils";
-// export class WaxBotHelpers {
-//     static async fetchAsset(assetCollection, assetSchema) {
-//         const URL = `https://wax.api.atomicassets.io/atomicassets/v1/assets?collection_name=${assetCollection}&schema_name=${assetSchema}&page=`;
-//         let planets = [];
-//         let lb;
-//         const finish = false;
-//         while (!finish) {
-//             try {
-//                 const data = await axios.get(URL, {
-//                     params: {
-//                         lower_bound: lb,
-//                         limit: 1000,
-//                         order: "asc",
-//                     },
-//                 });
-//                 if (data.data.data.length == 1) {
-//                     break;
-//                 }
-//                 const limit = data.data.data.length - 1; // get the last asset index
-//                 lb = data.data.data[limit].asset_id; // use the last asset id as lower bound
-//                 planets = planets.concat(data.data.data); // add assets
-//             } catch (err) {
-//                 console.log(err);
-//                 await Utils.sleep(2000);
-//                 return this.fetchAsset(assetCollection, assetSchema);
-//             }
-//         }
-//         return planets;
-//     }
-// }
-// // async function test() {
-// //     const data = await WaxBotHelpers.fetchAsset("darkgalaxies", "dark.planets");
-// //     console.log(data);
-// // }
-// // test();
+/* eslint-disable require-jsdoc */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setExpireSeconds = void 0;
+function setExpireSeconds(seconds) {
+    return seconds;
+}
+exports.setExpireSeconds = setExpireSeconds;

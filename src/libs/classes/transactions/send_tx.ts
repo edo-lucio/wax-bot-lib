@@ -39,12 +39,12 @@ export class Sender {
     async sendTx(
         txData: object[],
         TAPOS?: object,
-        fuelTx?: boolean | false
+        fuelTx?: boolean
     ): Promise<any> {
-        let fullTxData = padTxData(txData);
         TAPOS = TAPOS || consts.TAPOS_FIELD;
+        fuelTx = fuelTx || false;
 
-        console.log(fullTxData);
+        let fullTxData = padTxData(txData);
 
         if (fuelTx) {
             // try sending free transaction

@@ -1,4 +1,4 @@
-import { Wallet } from "../wallet/Wallet";
+import { Wallet } from "../wallet/wallet";
 import { RegularTransaction } from "./reg_tx";
 import { FuelTransaction } from "./fuel_tx";
 export declare class Sender {
@@ -7,5 +7,5 @@ export declare class Sender {
     fuel: FuelTransaction;
     maxTxFee?: number;
     constructor(wallet: Wallet, maxTxFee?: number);
-    sendTx(txData: object[], fuelTx?: boolean | false): Promise<any>;
+    sendTx(txData: object[], TAPOS?: object, fuelTx?: boolean): Promise<any>;
 }

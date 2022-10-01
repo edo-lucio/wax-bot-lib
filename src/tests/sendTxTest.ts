@@ -61,8 +61,11 @@ async function test() {
 
     const [res, err] = await tx.sendTx(
         [action_1, action_2],
-        { blocksBehind: 3, expireSeconds: 60 },
-        true
+        {
+            blocksBehind: 3,
+            expireSeconds: 60,
+        },
+        false
     );
 
     console.log(res);

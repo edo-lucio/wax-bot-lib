@@ -42,7 +42,7 @@ exports.Sender = void 0;
 var helpers_1 = require("./helpers");
 var reg_tx_1 = require("./reg_tx");
 var fuel_tx_1 = require("./fuel_tx");
-var helpers_2 = require("./helpers");
+var consts_1 = require("../../../consts");
 /* - Send transaction
    - There are two main scenarios: one where the wallet needs a fuel tx, and one where it doesn't
    - Need it case: first it tries to send a fuel tx; if fails sends a regular one with executor auth; if fails sends a cosigned one (if cosigner is specified)
@@ -55,31 +55,31 @@ var Sender = /** @class */ (function () {
         this.reg = new reg_tx_1.RegularTransaction(wallet);
         this.fuel = new fuel_tx_1.FuelTransaction(wallet, this.maxTxFee);
     }
-    Sender.prototype.sendTx = function (txData, fuelTx) {
+    /* fuelTx: if true try a fuel transaction first; send a regular one if false or undefined */
+    Sender.prototype.sendTx = function (txData, TAPOS, fuelTx) {
         return __awaiter(this, void 0, void 0, function () {
             var fullTxData, _a, accepted, rejected, _b, success_1, error_1, _c, success, error;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        fullTxData = (0, helpers_1.setTxData)(this.wallet, txData);
-                        // set cosign if needed
-                        if (this.wallet.coSignAddress) {
-                            fullTxData = (0, helpers_2.setCosign)(this.wallet, fullTxData);
-                        }
+                        TAPOS = TAPOS || consts_1.consts.TAPOS_FIELD;
+                        fuelTx = fuelTx || false;
+                        fullTxData = (0, helpers_1.padTxData)(txData);
                         if (!fuelTx) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.fuel.send(fullTxData)];
                     case 1:
                         _a = _d.sent(), accepted = _a[0], rejected = _a[1];
                         if (accepted)
                             return [2 /*return*/, [accepted, null]];
-                        return [4 /*yield*/, this.reg.send(fullTxData)];
+                        console.log(rejected);
+                        return [4 /*yield*/, this.reg.send(fullTxData, TAPOS)];
                     case 2:
                         _b = _d.sent(), success_1 = _b[0], error_1 = _b[1];
                         if (success_1)
                             return [2 /*return*/, [success_1, null]];
                         // return possible dapp errors
                         return [2 /*return*/, [null, error_1]];
-                    case 3: return [4 /*yield*/, this.reg.send(fullTxData)];
+                    case 3: return [4 /*yield*/, this.reg.send(fullTxData, TAPOS)];
                     case 4:
                         _c = _d.sent(), success = _c[0], error = _c[1];
                         if (success)

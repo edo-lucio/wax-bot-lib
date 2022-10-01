@@ -45,39 +45,61 @@ var __2 = require("..");
 var test_config_1 = __importDefault(require("./test_config"));
 function test() {
     return __awaiter(this, void 0, void 0, function () {
-        var wallet, sender, receiver, contracts, _a, res, err;
+        var wallet, tx, receiver, action_1, action_2, _a, res, err;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    wallet = new __2.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.WALLET, test_config_1.default.COSIGN_WALLET);
+                    wallet = new __2.Wallet(test_config_1.default.SERVER_ENDPOINT, test_config_1.default.COSIGN_WALLET, test_config_1.default.COSIGN_WALLET);
                     wallet.init();
-                    sender = new __1.Sender(wallet, 0.8);
-                    receiver = "marcantonio4";
-                    contracts = [
-                        {
-                            contract_name: "eosio.token",
-                            contract_action: "transfer",
-                            params: {
-                                from: wallet.executorAddress,
-                                memo: "",
-                                quantity: "1.01000000 WAX",
-                                to: receiver,
+                    tx = new __1.Sender(wallet, 0.8);
+                    receiver = "d3s3ijoe1c3w";
+                    action_1 = {
+                        account: "eosio.token",
+                        name: "transfer",
+                        authorization: [
+                            {
+                                actor: wallet.coSignAddress,
+                                permission: "active",
                             },
-                        },
-                        {
-                            contract_name: "eosio.token",
-                            contract_action: "transfer",
-                            params: {
-                                from: wallet.executorAddress,
-                                memo: "",
-                                quantity: "1.01000000 WAX",
-                                to: receiver,
+                            {
+                                actor: wallet.executorAddress,
+                                permission: "active",
                             },
+                        ],
+                        data: {
+                            from: wallet.executorAddress,
+                            to: receiver,
+                            quantity: "1.00000000 WAX",
+                            memo: "",
                         },
-                    ];
-                    return [4 /*yield*/, sender.sendTx(contracts)];
+                    };
+                    action_2 = {
+                        account: "eosio.token",
+                        name: "transfer",
+                        authorization: [
+                            {
+                                actor: wallet.coSignAddress,
+                                permission: "active",
+                            },
+                            {
+                                actor: wallet.executorAddress,
+                                permission: "active",
+                            },
+                        ],
+                        data: {
+                            from: wallet.executorAddress,
+                            to: receiver,
+                            quantity: "1.00000000 WAX",
+                            memo: "",
+                        },
+                    };
+                    return [4 /*yield*/, tx.sendTx([action_1, action_2], {
+                            blocksBehind: 3,
+                            expireSeconds: 60,
+                        }, false)];
                 case 1:
                     _a = _b.sent(), res = _a[0], err = _a[1];
+                    console.log(res);
                     if (err)
                         console.log(err);
                     return [2 /*return*/];
