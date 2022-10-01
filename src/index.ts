@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import { Wallet } from "./libs/classes/wallet/Wallet";
+import { Wallet } from "./libs/classes/wallet/wallet";
 
 import { Sender } from "./libs/classes/transactions/send_tx";
 

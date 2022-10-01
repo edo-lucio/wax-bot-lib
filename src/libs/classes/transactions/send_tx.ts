@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable require-jsdoc */
 
-import { setTxData } from "./helpers";
+import { padTxData } from "./helpers";
 
-import { Wallet } from "../wallet/Wallet";
+import { Wallet } from "../wallet/wallet";
 
 import { RegularTransaction } from "./reg_tx";
 import { FuelTransaction } from "./fuel_tx";
 
-import { setCosign } from "./helpers";
+import { consts } from "../../../consts";
 
 /* - Send transaction
    - There are two main scenarios: one where the wallet needs a fuel tx, and one where it doesn't 
@@ -35,21 +35,25 @@ export class Sender {
         this.fuel = new FuelTransaction(wallet, this.maxTxFee);
     }
 
-    async sendTx(txData: object[], fuelTx?: boolean | false): Promise<any> {
-        let fullTxData = setTxData(this.wallet, txData);
+    /* fuelTx: if true try a fuel transaction first; send a regular one if false or undefined */
+    async sendTx(
+        txData: object[],
+        TAPOS?: object,
+        fuelTx?: boolean | false
+    ): Promise<any> {
+        let fullTxData = padTxData(txData);
+        TAPOS = TAPOS || consts.TAPOS_FIELD;
 
-        // set cosign if needed
-        if (this.wallet.coSignAddress) {
-            fullTxData = setCosign(this.wallet, fullTxData);
-        }
+        console.log(fullTxData);
 
         if (fuelTx) {
             // try sending free transaction
             const [accepted, rejected] = await this.fuel.send(fullTxData);
             if (accepted) return [accepted, null];
+            console.log(rejected);
 
             // if fuel got rejected (requires fee or error) send regular transaction
-            const [success, error] = await this.reg.send(fullTxData);
+            const [success, error] = await this.reg.send(fullTxData, TAPOS);
             if (success) return [success, null];
 
             // return possible dapp errors
@@ -57,7 +61,7 @@ export class Sender {
         }
 
         // cpu available: try regular tx
-        const [success, error] = await this.reg.send(fullTxData);
+        const [success, error] = await this.reg.send(fullTxData, TAPOS);
         if (success) return [success, null];
 
         // return possible dapp errors

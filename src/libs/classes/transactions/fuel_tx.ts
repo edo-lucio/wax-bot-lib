@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 
-import { Wallet } from "../wallet/Wallet";
+import { Wallet } from "../wallet/wallet";
 
 import { RpcError } from "eosjs";
 import ecc from "eosjs-ecc";
@@ -15,12 +15,14 @@ export class FuelTransaction {
         this.maxFee = maxFee;
     }
 
+    /* try a fuel transaction
+    only works for executor wallet (not for the cosigner) when insufficient resources */
     async send(txData: any): Promise<any> {
         const newTxData = JSON.parse(JSON.stringify(txData));
         const signers = txData.actions[0].authorization; // executor array
 
-        // select the executor of the transaction which is usually the second element of the array depending on the presence of the cosign
-        const signer = signers.length > 1 ? signers[1] : signers[0];
+        // select the executor of the transaction (if there's a cosigner, it will provide for fuel transactions)
+        const signer = signers[signers.length - 1];
 
         // add it to transaction data
         newTxData.actions[0].authorization = [signer];
@@ -61,6 +63,7 @@ export class FuelTransaction {
 
             // Pull the modified transaction from the API response
             const { data } = json;
+            console.log(json);
 
             /*
                 Based on the response code, perform different functions
@@ -108,10 +111,10 @@ export class FuelTransaction {
                                 signedTransaction
                             );
                         console.log(`\n\nBroadcast response from API:\n`);
-                        console.log(response);
 
                         return [response, undefined];
                     } catch (error) {
+                        console.log(error);
                         return [undefined, error];
                     }
                 }
@@ -152,7 +155,6 @@ export class FuelTransaction {
                         );
 
                     console.log(`\n\nBroadcast response from API:\n`);
-                    console.log(response);
 
                     return [response, undefined];
                 }
